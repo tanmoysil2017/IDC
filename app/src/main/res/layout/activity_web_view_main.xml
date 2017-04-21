@@ -2,7 +2,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="#0099cc"
+             android:background="#000000"
              tools:context="com.idc.tanmoysil.irelanddurgotsab.WebViewMainActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
@@ -13,6 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:keepScreenOn="true"
+            android:background="#4863A0"
     />
 
     <!-- This FrameLayout insets its children based on system windows using
@@ -29,9 +30,6 @@
                       android:background="@color/black_overlay"
                       android:orientation="horizontal"
                       tools:ignore="UselessParent">
-
-
-
         </LinearLayout>
     </FrameLayout>
 

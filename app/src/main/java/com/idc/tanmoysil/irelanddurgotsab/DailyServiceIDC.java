@@ -28,7 +28,14 @@ public class DailyServiceIDC extends BroadcastReceiver
         cal1.set(2017, 8, 27);
 
         int badgeCount = daysBetween(new Date(), cal1.getTime());
-        setBadge(context, badgeCount + 1);
+        if (badgeCount >= 0)
+        {
+            setBadge(context, badgeCount + 1);
+        }
+        else
+        {
+            setBadge(context, 0);
+        }
     }
 
     public void setAlarm(Context context)

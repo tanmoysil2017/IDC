@@ -1,10 +1,12 @@
 package com.idc.tanmoysil.irelanddurgotsab;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,6 +47,9 @@ public class WebViewMainActivity extends AppCompatActivity {
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private View mContentView;
+    private WebView browser;
+    private boolean doubleBackToExitPressedOnce;
+
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
@@ -118,12 +123,43 @@ public class WebViewMainActivity extends AppCompatActivity {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        WebView browser = (WebView) findViewById(R.id.webview);
+        browser = (WebView) findViewById(R.id.webview);
         browser.getSettings().setLoadsImagesAutomatically(true);
         browser.getSettings().setJavaScriptEnabled(true);
-        browser.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        browser.loadUrl("https://www.irelanddurgotsab.com");
+        //browser.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 
+        // Start - Progress bar while loading
+        final ProgressDialog pd = ProgressDialog.show(WebViewMainActivity.this, "", "Loading, Please wait...", true);
+
+        browser  = (WebView)findViewById(R.id.webview);
+
+        browser.getSettings().setJavaScriptEnabled(true); // enable javascript
+
+        browser.getSettings().setLoadWithOverviewMode(true);
+        browser.getSettings().setUseWideViewPort(true);
+        browser.getSettings().setBuiltInZoomControls(true);
+
+
+        browser.setWebViewClient(new WebViewClient() {
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                Toast.makeText(WebViewMainActivity.this, description, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon)
+            {
+                pd.show();
+            }
+
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                pd.dismiss();
+            }
+
+        });
+        // End - Progress bar
+        browser.loadUrl("https://www.irelanddurgotsab.com");
 
         DailyServiceIDC ds =  new DailyServiceIDC();
         ds.cancelAlarm(this);
@@ -200,5 +236,31 @@ public class WebViewMainActivity extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    // Back Key pressed
+    @Override
+    public void onBackPressed() {
+        if (browser.copyBackForwardList().getCurrentIndex() > 0) {
+            browser.goBack();
+        }
+        else {
+            // Your exit alert code, or alternatively line below to finish
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, this.getResources().getString(R.string.exit_toast), Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+
+        }
     }
 }
