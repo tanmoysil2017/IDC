@@ -25,7 +25,7 @@ public class DailyServiceIDC extends BroadcastReceiver
     public void onReceive(Context context, Intent intent)
     {
         Calendar cal1 = new GregorianCalendar();
-        cal1.set(2017, 8, 27);
+        cal1.set(2018, 10, 15);
 
         int badgeCount = daysBetween(new Date(), cal1.getTime());
         if (badgeCount >= 0)

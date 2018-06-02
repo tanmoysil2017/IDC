@@ -159,7 +159,7 @@ public class WebViewMainActivity extends AppCompatActivity {
 
         });
         // End - Progress bar
-        browser.loadUrl("https://www.irelanddurgotsab.com");
+        browser.loadUrl("http://www.irelanddurgotsab.ie");
 
         DailyServiceIDC ds =  new DailyServiceIDC();
         ds.cancelAlarm(this);
