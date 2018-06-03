@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.idc.tanmoysil.irelanddurgotsab">
+          package="com.idc.tanmoysil.irelanddurgapuja">
 
     <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
@@ -13,7 +13,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".WebViewMainActivity"
+                android:name="com.idc.tanmoysil.irelanddurgapuja.WebViewMainActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:label="@string/app_name"
                 android:theme="@style/FullscreenTheme">
@@ -25,7 +25,7 @@
         </activity>
         <receiver android:name=".TestAlarmReceiver"></receiver>
 
-        <receiver android:name=".DailyServiceIDCOnBoot"
+        <receiver android:name="com.idc.tanmoysil.irelanddurgapuja.DailyServiceIDCOnBoot"
                   android:exported="false"
                   android:directBootAware="true">
             <!-- Listening the BOOT_COMPLETED action for legacy pre-N devices -->
@@ -34,7 +34,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".DailyServiceIDC"/>
+        <receiver android:name="com.idc.tanmoysil.irelanddurgapuja.DailyServiceIDC"/>
 
     </application>
 
